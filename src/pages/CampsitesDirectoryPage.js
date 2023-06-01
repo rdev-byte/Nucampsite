@@ -1,20 +1,14 @@
-import { Row, Col } from 'reactstrap';
-import { selectAllCampsites } from '../features/campsites/campsitesSlice';
-import CampsiteCard from './CampsiteCard';
+import { Container } from 'reactstrap';
+import CampsitesList from '../features/campsites/CampsitesList';
+import SubHeader from '../components/SubHeader';
 
-const CampsitesList = () => {
-    const campsites = selectAllCampsites();
-    return (
-        <Row className='ms-auto'>
-            {campsites.map((campsite) => {
-                return (
-                    <Col md='5' className='m-4' key={campsite.id}>
-                        <CampsiteCard campsite={campsite} />
-                    </Col>
-                );
-            })}
-        </Row>
-    );
+const CampsitesDirectoryPage = () => {
+  return (
+    <Container>
+      <SubHeader current="Directory" />
+      <CampsitesList />
+    </Container>
+  );
 };
 
-export default CampsitesList;
+export default CampsitesDirectoryPage;
