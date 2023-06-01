@@ -12,7 +12,7 @@ const CampsitesDirectoryPage = () => {
         <Container>
             <Row>
                 <Col sm='5' md='7'>
-                    <CampsitesList setCamspiteId={setCampsiteId}/>
+                    <CampsitesList setCampsiteId={setCampsiteId}/>
                 </Col>
                 <Col sm='7' md='5'>
                     <CampsiteDetail campsite={selectedCampsite} />
