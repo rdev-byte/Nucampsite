@@ -1,25 +1,20 @@
-import { useState } from 'react';
-import { Container, Row, Col } from 'reactstrap';
-import CampsiteDetail from '../features/campsites/CampsiteDetail';
-import CampsitesList from '../features/campsites/CampsitesList';
-import { selectCampsiteById } from '../features/campsites/campsitesSlice';
+import { Row, Col } from 'reactstrap';
+import { selectAllCampsites } from '../features/campsites/campsitesSlice';
+import CampsiteCard from './CampsiteCard';
 
-const CampsitesDirectoryPage = () => {
-    const [campsiteId, setCampsiteId] = useState(0);
-    const selectedCampsite = selectCampsiteById(campsiteId);
-
+const CampsitesList = () => {
+    const campsites = selectAllCampsites();
     return (
-        <Container>
-            <Row>
-                <Col sm='5' md='7'>
-                    <CampsitesList setCampsiteId={setCampsiteId}/>
-                </Col>
-                <Col sm='7' md='5'>
-                    <CampsiteDetail campsite={selectedCampsite} />
-                </Col>
-            </Row>
-        </Container>
+        <Row className='ms-auto'>
+            {campsites.map((campsite) => {
+                return (
+                    <Col md='5' className='m-4' key={campsite.id}>
+                        <CampsiteCard campsite={campsite} />
+                    </Col>
+                );
+            })}
+        </Row>
     );
 };
 
-export default CampsitesDirectoryPage;
+export default CampsitesList;
