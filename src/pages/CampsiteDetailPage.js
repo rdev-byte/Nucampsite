@@ -1,6 +1,7 @@
 import { Container, Row, Col } from 'reactstrap';
 import { useParams } from 'react-router-dom';
 import { selectCampsiteById } from '../features/campsites/campsitesSlice';
+import SubHeader from '../components/SubHeader';
 import CampsiteDetail from '../features/campsites/CampsiteDetail';
 import CommentsList from '../features/comments/CommentsList';
 
