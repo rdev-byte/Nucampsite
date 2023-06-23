@@ -1,26 +1,40 @@
 import { Container, Row, Col } from 'reactstrap';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { selectCampsiteById } from '../features/campsites/campsitesSlice';
 import SubHeader from '../components/SubHeader';
 import CampsiteDetail from '../features/campsites/CampsiteDetail';
 import CommentsList from '../features/comments/CommentsList';
+import Error from '../components/Error';
+import Loading from '../components/Loading';
 
 const CampsiteDetailPage = () => {
   const { campsiteId } = useParams();
-  const campsite = selectCampsiteById(campsiteId);
+  const campsite = useSelector(selectCampsiteById(campsiteId));
+  console.log('campsite', campsite);
+
+  const isLoading = useSelector((state) => state.campsites.isLoading);
+  const errMsg = useSelector((state) => state.campsites.errMsg);
+  let content = null;
+
+  if (isLoading) {
+      content = <Loading />;
+  } else if (errMsg) {
+      content = <Error errMsg={errMsg} />;
+  } else {
+      content = (
+          <>
+              <CampsiteDetail campsite={campsite} />
+              <CommentsList campsiteId={campsiteId} />
+          </>
+      );
+  }
 
   return (
-    <Container>
-      <SubHeader current={campsite.name} detail={true} />
-      <Row>
-        <Col md='5' className='m-1'>
-          <CampsiteDetail campsite={campsite} />
-        </Col>
-        <Col md='5' className='m-1'>
-          <CommentsList campsiteId={campsiteId} />
-        </Col>
-      </Row>
-    </Container>
+      <Container>
+          {campsite && <SubHeader current={campsite.name} detail={true} />}
+          <Row>{content}</Row>
+      </Container>
   );
 };
 
